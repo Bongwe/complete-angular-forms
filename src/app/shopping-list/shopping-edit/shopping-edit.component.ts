@@ -10,6 +10,7 @@ import {
 import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
+import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -45,9 +46,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
    }
 
   onAddItem(form: NgForm) {
-    const valaue = form.value;
-    const newIngredient = new Ingredient(valaue.name, valaue.amount);
-    this.slService.addIngredient(newIngredient);
+    const value = form.value;
+    const newIngredient = new Ingredient(value.name, value.amount);
+
+    if (this.editMode) {
+      this.slService.updateIngredient(this.editedItemIndex, newIngredient);
+    } else {
+      this.slService.addIngredient(newIngredient);
+    }
   }
 
 }
