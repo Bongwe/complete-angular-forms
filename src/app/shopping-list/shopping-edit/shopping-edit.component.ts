@@ -10,7 +10,6 @@ import {
 import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -56,6 +55,16 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }
     this.editMode = false;
     form.reset();
+  }
+
+  onClear() {
+    this.slForm.reset();
+    this.editMode = false;
+  }
+
+  onDelete() {
+    this.slService.deleteIngredient(this.editedItemIndex);
+    this.onClear();
   }
 
 }
