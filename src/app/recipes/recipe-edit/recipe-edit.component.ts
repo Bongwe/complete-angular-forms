@@ -49,9 +49,10 @@ export class RecipeEditComponent implements OnInit {
                 'amount' : new FormControl(ingredient.amount, [
                   Validators.required,
                   Validators.pattern(/^[1-9]+[0-9]*$/)
+                ])
               })
             );
-        }
+          }
       }
     }
 
@@ -103,6 +104,10 @@ export class RecipeEditComponent implements OnInit {
     } else {
       this.router.navigate([newRoute], {relativeTo: null});
     }
+  }
+
+  deleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
 
 }
